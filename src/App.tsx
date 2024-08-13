@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import BookList from './components/BookList/BookList';
-import AddBookForm from './components/AddBookForm/AddBookForm';
 import { Book } from './types';
 import './App.scss';
 
@@ -47,13 +46,13 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <h1>Book Web App</h1>
-      <AddBookForm addBook={addBook} />
       <BookList
         books={[...books, ...localBooks]}
         favorites={favorites}
         toggleFavorite={toggleFavorite}
         editBook={editBook}
         deleteBook={deleteBook}
+        addBook={addBook}
       />
     </div>
   );

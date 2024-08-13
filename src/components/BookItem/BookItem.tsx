@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Book } from '../../types';
 import './BookItem.module.scss';
+import BookModal from '../BookModal/BookModal';
 
 interface BookItemProps {
 	book: Book;
@@ -12,44 +13,33 @@ interface BookItemProps {
 
 const BookItem: React.FC<BookItemProps> = ({ book, isFavorite, toggleFavorite, editBook, deleteBook }) => {
 	const [isEditing, setIsEditing] = useState(false);
-	const [editedBook, setEditedBook] = useState<Book>(book);
 
-	const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-		const { name, value } = e.target;
-		setEditedBook({ ...editedBook, [name]: value });
-	};
-
-	const handleEditSubmit = () => {
+	const handleEditSubmit = (editedBook: Book) => {
 		editBook(editedBook);
 		setIsEditing(false);
 	};
 
 	return (
 		<div className="bookItem">
-			{isEditing ? (
-				<div>
-					<input name="title" value={editedBook.title} onChange={handleEditChange} />
-					<textarea name="description" value={editedBook.description} onChange={handleEditChange} />
-					<button onClick={handleEditSubmit}>Save</button>
-					<button onClick={() => setIsEditing(false)}>Cancel</button>
-				</div>
-			) : (
-				<div>
-					<img src={book.cover} alt={`${book.title} cover`} className="bookCover" />
-					<h2 className="bookTitle">{book.title}</h2>
-					<p className="bookAuthor">{book.author}</p>
-					<p className="bookDescription">{book.description}</p>
-					<button onClick={() => toggleFavorite(book.id)}>
-						{isFavorite ? 'Unfavorite' : 'Favorite'}
-					</button>
-					{book.isLocal && (
-						<>
-							<button onClick={() => setIsEditing(true)}>Edit</button>
-							<button onClick={() => deleteBook(book.id)}>Delete</button>
-						</>
-					)}
-				</div>
+			<img src={book.cover} alt={`${book.title} cover`} className="bookCover" />
+			<h2 className="bookTitle">{book.title}</h2>
+			<p className="bookAuthor">{book.author}</p>
+			<p className="bookDescription">{book.description}</p>
+			<button onClick={() => toggleFavorite(book.id)}>
+				{isFavorite ? 'Unfavorite' : 'Favorite'}
+			</button>
+			{book.isLocal && (
+				<>
+					<button onClick={() => setIsEditing(true)}>Edit</button>
+					<button onClick={() => deleteBook(book.id)}>Delete</button>
+				</>
 			)}
+			<BookModal
+				isOpen={isEditing}
+				onRequestClose={() => setIsEditing(false)}
+				initialValues={book}
+				onSubmit={handleEditSubmit}
+			/>
 		</div>
 	);
 };

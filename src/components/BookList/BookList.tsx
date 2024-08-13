@@ -3,6 +3,7 @@ import BookItem from '../BookItem/BookItem';
 import Pagination from '../Pagination/Pagination';
 import { Book } from '../../types';
 import styles from './BookList.module.scss';
+import BookModal from '../BookModal/BookModal';
 
 interface BookListProps {
 	books: Book[];
@@ -10,10 +11,12 @@ interface BookListProps {
 	toggleFavorite: (id: number) => void;
 	editBook: (book: Book) => void;
 	deleteBook: (id: number) => void;
+	addBook: (book: Book) => void;
 }
 
-const BookList: React.FC<BookListProps> = ({ books, favorites, toggleFavorite, editBook, deleteBook }) => {
+const BookList: React.FC<BookListProps> = ({ books, favorites, toggleFavorite, editBook, deleteBook, addBook }) => {
 	const [currentPage, setCurrentPage] = useState(1);
+	const [isAdding, setIsAdding] = useState(false);
 	const booksPerPage = 5;
 
 	const indexOfLastBook = currentPage * booksPerPage;
@@ -22,8 +25,14 @@ const BookList: React.FC<BookListProps> = ({ books, favorites, toggleFavorite, e
 
 	const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
+	const handleAddBook = (newBook: Book) => {
+		addBook(newBook);
+		setIsAdding(false);
+	};
+
 	return (
 		<div className={styles.bookList}>
+			<button onClick={() => setIsAdding(true)}>Add Book</button>
 			{currentBooks.map(book => (
 				<BookItem
 					key={book.id}
@@ -35,6 +44,11 @@ const BookList: React.FC<BookListProps> = ({ books, favorites, toggleFavorite, e
 				/>
 			))}
 			<Pagination booksPerPage={booksPerPage} totalBooks={books.length} paginate={paginate} />
+			<BookModal
+				isOpen={isAdding}
+				onRequestClose={() => setIsAdding(false)}
+				onSubmit={handleAddBook}
+			/>
 		</div>
 	);
 };
