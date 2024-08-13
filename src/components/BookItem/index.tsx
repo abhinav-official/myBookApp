@@ -1,13 +1,10 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Book } from '../types';
+import { Book } from '../../types';
+import styles from './styles.module.css';
 
 interface BookItemProps {
 	book: Book;
-	isFavorite: boolean;
-	onToggleFavorite: (id: number) => void;
-	onEditBook: (book: Book) => void;
-	onDeleteBook: (id: number) => void;
 }
 
 interface FormValues {
@@ -17,48 +14,46 @@ interface FormValues {
 	publicationDate: string;
 }
 
-const BookItem: React.FC<BookItemProps> = ({ book, isFavorite, onToggleFavorite, onEditBook, onDeleteBook }) => {
-	const { register, handleSubmit, formState: { errors, isValid, isSubmitting }, reset } = useForm<FormValues>({
-		mode: 'onChange' // Enable validation on change
+const BookItem: React.FC<BookItemProps> = ({ book }) => {
+	const { register, handleSubmit, formState: { errors, isValid, isSubmitting } } = useForm<FormValues>({
+		defaultValues: {
+			title: book.title,
+			author: book.author,
+			description: book.description,
+			publicationDate: book.publicationDate,
+		},
 	});
 
-	const onSubmit: SubmitHandler<FormValues> = async data => {
-		await onEditBook({ ...book, ...data });
-		reset(); // Reset the form fields after submission
+	const onSubmit: SubmitHandler<FormValues> = data => {
+		// Handle form submission
+	};
+
+	const onDeleteBook = (id: string) => {
+		// Handle book deletion
 	};
 
 	return (
-		<div className="book-item">
-			<img src={book.cover} alt={book.title} />
-			<h2>{book.title}</h2>
-			<p>{book.author}</p>
-			<p>{book.description}</p>
-			<p>{book.publicationDate}</p>
-			<button onClick={() => onToggleFavorite(book.id)}>
-				{isFavorite ? '❤️' : '♡'}
-			</button>
+		<div className={styles.bookItem}>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<input
-					defaultValue={book.title}
+					type="text"
 					{...register('title', { required: 'Title is required' })}
 				/>
 				{errors.title && <p>{errors.title.message}</p>}
 
 				<input
-					defaultValue={book.author}
+					type="text"
 					{...register('author', { required: 'Author is required' })}
 				/>
 				{errors.author && <p>{errors.author.message}</p>}
 
 				<textarea
-					defaultValue={book.description}
 					{...register('description', { required: 'Description is required' })}
 				/>
 				{errors.description && <p>{errors.description.message}</p>}
 
 				<input
 					type="date"
-					defaultValue={book.publicationDate}
 					{...register('publicationDate', { required: 'Publication date is required' })}
 				/>
 				{errors.publicationDate && <p>{errors.publicationDate.message}</p>}
@@ -67,7 +62,7 @@ const BookItem: React.FC<BookItemProps> = ({ book, isFavorite, onToggleFavorite,
 					{isSubmitting ? 'Submitting...' : 'Edit'}
 				</button>
 			</form>
-			<button onClick={() => onDeleteBook(book.id)}>Delete</button>
+			<button onClick={() => onDeleteBook(book.id.toString())}>Delete</button>
 		</div>
 	);
 };
