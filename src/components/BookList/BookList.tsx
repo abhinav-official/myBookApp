@@ -8,9 +8,11 @@ interface BookListProps {
 	books: Book[];
 	favorites: number[];
 	toggleFavorite: (id: number) => void;
+	editBook: (book: Book) => void;
+	deleteBook: (id: number) => void;
 }
 
-const BookList: React.FC<BookListProps> = ({ books, favorites, toggleFavorite }) => {
+const BookList: React.FC<BookListProps> = ({ books, favorites, toggleFavorite, editBook, deleteBook }) => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const booksPerPage = 5;
 
@@ -23,7 +25,14 @@ const BookList: React.FC<BookListProps> = ({ books, favorites, toggleFavorite })
 	return (
 		<div className={styles.bookList}>
 			{currentBooks.map(book => (
-				<BookItem key={book.id} book={book} isFavorite={favorites.includes(book.id)} toggleFavorite={toggleFavorite} />
+				<BookItem
+					key={book.id}
+					book={book}
+					isFavorite={favorites.includes(book.id)}
+					toggleFavorite={toggleFavorite}
+					editBook={editBook}
+					deleteBook={deleteBook}
+				/>
 			))}
 			<Pagination booksPerPage={booksPerPage} totalBooks={books.length} paginate={paginate} />
 		</div>

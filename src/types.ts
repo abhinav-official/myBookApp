@@ -5,4 +5,5 @@ export interface Book {
   description: string;
   cover: string;
   publicationDate: string;
+  isLocal?: boolean;
 }

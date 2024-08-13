@@ -27,7 +27,15 @@ const App: React.FC = () => {
   }, [favorites]);
 
   const addBook = (book: Book) => {
-    setLocalBooks([...localBooks, book]);
+    setLocalBooks([...localBooks, { ...book, isLocal: true }]);
+  };
+
+  const editBook = (updatedBook: Book) => {
+    setLocalBooks(localBooks.map(book => book.id === updatedBook.id ? updatedBook : book));
+  };
+
+  const deleteBook = (id: number) => {
+    setLocalBooks(localBooks.filter(book => book.id !== id));
   };
 
   const toggleFavorite = (id: number) => {
@@ -40,7 +48,13 @@ const App: React.FC = () => {
     <div className="App">
       <h1>Book Web App</h1>
       <AddBookForm addBook={addBook} />
-      <BookList books={[...books, ...localBooks]} favorites={favorites} toggleFavorite={toggleFavorite} />
+      <BookList
+        books={[...books, ...localBooks]}
+        favorites={favorites}
+        toggleFavorite={toggleFavorite}
+        editBook={editBook}
+        deleteBook={deleteBook}
+      />
     </div>
   );
 };
