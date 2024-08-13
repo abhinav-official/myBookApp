@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './Pagination.module.scss';
 
 interface PaginationProps {
 	booksPerPage: number;
@@ -14,13 +15,11 @@ const Pagination: React.FC<PaginationProps> = ({ booksPerPage, totalBooks, pagin
 	}
 
 	return (
-		<nav>
-			<ul className="pagination">
+		<nav className={styles.pagination}>
+			<ul>
 				{pageNumbers.map(number => (
-					<li key={number} className="page-item">
-						<a onClick={() => paginate(number)} href="!#" className="page-link">
-							{number}
-						</a>
+					<li key={number}>
+						<button onClick={() => paginate(number)}>{number}</button>
 					</li>
 				))}
 			</ul>
