@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import BookItem from '../BookItem/BookItem';
 import Pagination from '../Pagination/Pagination';
 import { Book } from '../../types';
-import styles from './BookList.module.scss';
+import './BookList.module.scss';
 import BookModal from '../BookModal/BookModal';
 
 interface BookListProps {
@@ -31,8 +31,8 @@ const BookList: React.FC<BookListProps> = ({ books, favorites, toggleFavorite, e
 	};
 
 	return (
-		<div className={styles.bookList}>
-			<button onClick={() => setIsAdding(true)}>Add Book</button>
+		<div className="bookList">
+			<button className='addBookButton' onClick={() => setIsAdding(true)}>Add Book</button>
 			{currentBooks.map(book => (
 				<BookItem
 					key={book.id}

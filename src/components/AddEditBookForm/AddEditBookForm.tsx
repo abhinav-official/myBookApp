@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { Book } from '../../types';
-import styles from './AddEditBookForm.module.scss';
+import './AddEditBookForm.module.scss';
 
 interface AddEditBookFormProps {
 	initialValues?: Book;
@@ -18,7 +18,7 @@ const AddEditBookForm: React.FC<AddEditBookFormProps> = ({ initialValues, onSubm
 	};
 
 	return (
-		<form id="bookForm" onSubmit={handleSubmit(handleFormSubmit)} className={styles.addEditBookForm}>
+		<form id="bookForm" onSubmit={handleSubmit(handleFormSubmit)} className="addEditBookForm">
 			<input {...register('title')} placeholder="Title" required />
 			<input {...register('author')} placeholder="Author" required />
 			<textarea {...register('description')} placeholder="Description" required />
