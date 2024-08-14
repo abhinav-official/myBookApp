@@ -6,6 +6,7 @@ import { useFavorites } from '~/hooks/useFavourites';
 import Image from '../Image/Image';
 import styles from './BookItem.module.scss';
 import { FaEdit, FaHeart, FaTrash } from 'react-icons/fa';
+import { format } from 'date-fns';
 
 type BookItemProps = {
 	book: Book;
@@ -22,7 +23,7 @@ const BookItem: React.FC<BookItemProps> = ({ book }) => {
 	};
 
 	const isFavorite = favorites.includes(book.id);
-
+	const formattedDate = format(new Date(book.publicationDate), 'dd MMM yyyy');
 	return (
 		<div className={styles.bookItemContainer}>
 			<Image src={book.cover} fallbackSrc="https://via.placeholder.com/150" alt={`${book.title} cover`} className={styles.bookCover} />
@@ -30,6 +31,7 @@ const BookItem: React.FC<BookItemProps> = ({ book }) => {
 				<h2 className={styles.bookTitle}>{book.title}</h2>
 				<p className={styles.bookAuthor}>{book.author}</p>
 				<p className={styles.bookDescription}>{book.description}</p>
+				<p className={styles.bookPublicationDate}>{formattedDate}</p>
 			</div>
 			<div className={styles.bookItemActionContainer}>
 				<button onClick={() => toggleFavorite(book.id)} >
