@@ -28,7 +28,9 @@ const BookItem: React.FC<BookItemProps> = ({ book }) => {
 		dispatch(toggleFavorite(book.id))
 	}
 	const handleDelete = () => {
-		dispatch(deleteBook(book.id));
+		if (window.confirm('Are you sure you want to delete this book?')) {
+			dispatch(deleteBook(book.id));
+		}
 	}
 
 
