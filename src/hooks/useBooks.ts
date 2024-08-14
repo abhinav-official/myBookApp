@@ -35,18 +35,31 @@ export const useBooks = () => {
     fetchLocalBooks();
   }, [enqueueSnackbar]);
 
+  useEffect(() => {
+    setBooks(prevBooks => [...prevBooks.filter(book => !book.isLocal), ...localBooks]);
+  }, [localBooks]);
+
+  const refreshBooks = () => {
+    setBooks(prevBooks => [...prevBooks.filter(book => !book.isLocal), ...localBooks]);
+  };
+
   const addBook = (newBook: Book) => {
-    const updatedLocalBooks = [...localBooks, newBook];
+    const bookWithLocalFlag = { ...newBook, isLocal: true, id: Date.now() };
+    const updatedLocalBooks = [...localBooks, bookWithLocalFlag];
     setLocalBooks(updatedLocalBooks);
     localStorage.setItem('localBooks', JSON.stringify(updatedLocalBooks));
     enqueueSnackbar('Book added successfully!', { variant: 'success' });
+    refreshBooks();
   };
 
   const editBook = (updatedBook: Book) => {
-    const updatedLocalBooks = localBooks.map(book => book.id === updatedBook.id ? updatedBook : book);
+    const updatedLocalBooks = localBooks.map(book =>
+      book.id === updatedBook.id ? { ...updatedBook, isLocal: true } : book
+    );
     setLocalBooks(updatedLocalBooks);
     localStorage.setItem('localBooks', JSON.stringify(updatedLocalBooks));
     enqueueSnackbar('Book edited successfully!', { variant: 'success' });
+    refreshBooks();
   };
 
   const deleteBook = (id: number) => {
@@ -54,10 +67,11 @@ export const useBooks = () => {
     setLocalBooks(updatedLocalBooks);
     localStorage.setItem('localBooks', JSON.stringify(updatedLocalBooks));
     enqueueSnackbar('Book deleted successfully!', { variant: 'success' });
+    refreshBooks();
   };
 
   return {
-    books: [...books, ...localBooks],
+    books,
     localBooks,
     addBook,
     editBook,

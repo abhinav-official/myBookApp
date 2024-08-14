@@ -25,7 +25,12 @@ const BookList: React.FC = () => {
 					book={book}
 				/>
 			))}
-			<Pagination booksPerPage={booksPerPage} totalBooks={books.length} paginate={paginate} />
+			<Pagination
+				booksPerPage={booksPerPage}
+				totalBooks={books.length}
+				paginate={paginate}
+				currentPage={currentPage}
+			/>
 		</div>
 	);
 };

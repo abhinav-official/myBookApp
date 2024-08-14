@@ -17,4 +17,8 @@
 		color: white;
 		cursor: pointer;
 	}
+
+	.active {
+		background-color: var(--secondary-color);
+	}
 }

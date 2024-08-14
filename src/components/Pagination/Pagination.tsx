@@ -5,9 +5,10 @@ interface PaginationProps {
 	booksPerPage: number;
 	totalBooks: number;
 	paginate: (pageNumber: number) => void;
+	currentPage: number;
 }
 
-const Pagination: React.FC<PaginationProps> = ({ booksPerPage, totalBooks, paginate }) => {
+const Pagination: React.FC<PaginationProps> = ({ booksPerPage, totalBooks, paginate, currentPage }) => {
 	const pageNumbers = [];
 
 	for (let i = 1; i <= Math.ceil(totalBooks / booksPerPage); i++) {
@@ -24,7 +25,12 @@ const Pagination: React.FC<PaginationProps> = ({ booksPerPage, totalBooks, pagin
 			<ul>
 				{pageNumbers.map(number => (
 					<li key={number}>
-						<button onClick={() => handlePageChange(number)}>{number}</button>
+						<button
+							onClick={() => handlePageChange(number)}
+							className={number === currentPage ? styles.active : ''}
+						>
+							{number}
+						</button>
 					</li>
 				))}
 			</ul>

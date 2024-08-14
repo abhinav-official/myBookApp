@@ -13,14 +13,9 @@ type BookItemProps = {
 }
 
 const BookItem: React.FC<BookItemProps> = ({ book }) => {
-	const { editBook, deleteBook } = useBooks();
+	const { deleteBook } = useBooks();
 	const { favorites, toggleFavorite } = useFavorites();
 	const [isEditing, setIsEditing] = useState(false);
-
-	const handleEditSubmit = (editedBook: Book) => {
-		editBook(editedBook);
-		setIsEditing(false);
-	};
 
 	const isFavorite = favorites.includes(book.id);
 	const formattedDate = format(new Date(book.publicationDate), 'dd MMM yyyy');
@@ -48,7 +43,6 @@ const BookItem: React.FC<BookItemProps> = ({ book }) => {
 				isOpen={isEditing}
 				onRequestClose={() => setIsEditing(false)}
 				initialValues={book}
-				onSubmit={handleEditSubmit}
 			/>
 		</div>
 	);
