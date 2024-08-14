@@ -8,53 +8,59 @@ export const useBooks = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
-	const fetchBooks = async () => {
-	  try {
-		const response = await fetch('https://my-json-server.typicode.com/cutamar/mock/books');
-		const data = await response.json();
-		setBooks(data);
-	  } catch {
-		enqueueSnackbar('Failed to fetch books from API', { variant: 'error' });
-	  }
-	};
+    const fetchBooks = async () => {
+      try {
+        const cachedBooks = localStorage.getItem('cachedBooks');
+        if (cachedBooks) {
+          setBooks(JSON.parse(cachedBooks));
+        } else {
+          const response = await fetch('https://my-json-server.typicode.com/cutamar/mock/books');
+          const data = await response.json();
+          setBooks(data);
+          localStorage.setItem('cachedBooks', JSON.stringify(data));
+        }
+      } catch {
+        enqueueSnackbar('Failed to fetch books from API', { variant: 'error' });
+      }
+    };
 
-	const fetchLocalBooks = () => {
-	  const localData = localStorage.getItem('localBooks');
-	  if (localData) {
-		setLocalBooks(JSON.parse(localData));
-	  }
-	};
+    const fetchLocalBooks = () => {
+      const localData = localStorage.getItem('localBooks');
+      if (localData) {
+        setLocalBooks(JSON.parse(localData));
+      }
+    };
 
-	fetchBooks();
-	fetchLocalBooks();
+    fetchBooks();
+    fetchLocalBooks();
   }, [enqueueSnackbar]);
 
   const addBook = (newBook: Book) => {
-	const updatedLocalBooks = [...localBooks, newBook];
-	setLocalBooks(updatedLocalBooks);
-	localStorage.setItem('localBooks', JSON.stringify(updatedLocalBooks));
-	enqueueSnackbar('Book added successfully!', { variant: 'success' });
+    const updatedLocalBooks = [...localBooks, newBook];
+    setLocalBooks(updatedLocalBooks);
+    localStorage.setItem('localBooks', JSON.stringify(updatedLocalBooks));
+    enqueueSnackbar('Book added successfully!', { variant: 'success' });
   };
 
   const editBook = (updatedBook: Book) => {
-	const updatedLocalBooks = localBooks.map(book => book.id === updatedBook.id ? updatedBook : book);
-	setLocalBooks(updatedLocalBooks);
-	localStorage.setItem('localBooks', JSON.stringify(updatedLocalBooks));
-	enqueueSnackbar('Book edited successfully!', { variant: 'success' });
+    const updatedLocalBooks = localBooks.map(book => book.id === updatedBook.id ? updatedBook : book);
+    setLocalBooks(updatedLocalBooks);
+    localStorage.setItem('localBooks', JSON.stringify(updatedLocalBooks));
+    enqueueSnackbar('Book edited successfully!', { variant: 'success' });
   };
 
   const deleteBook = (id: number) => {
-	const updatedLocalBooks = localBooks.filter(book => book.id !== id);
-	setLocalBooks(updatedLocalBooks);
-	localStorage.setItem('localBooks', JSON.stringify(updatedLocalBooks));
-	enqueueSnackbar('Book deleted successfully!', { variant: 'success' });
+    const updatedLocalBooks = localBooks.filter(book => book.id !== id);
+    setLocalBooks(updatedLocalBooks);
+    localStorage.setItem('localBooks', JSON.stringify(updatedLocalBooks));
+    enqueueSnackbar('Book deleted successfully!', { variant: 'success' });
   };
 
   return {
-	books,
-	localBooks,
-	addBook,
-	editBook,
-	deleteBook,
+    books: [...books, ...localBooks],
+    localBooks,
+    addBook,
+    editBook,
+    deleteBook,
   };
 };
