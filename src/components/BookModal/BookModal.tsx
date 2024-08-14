@@ -11,6 +11,9 @@ interface BookModalProps {
 }
 
 const BookModal: React.FC<BookModalProps> = ({ isOpen, onRequestClose, initialValues }) => {
+
+	const modalTitle = initialValues ? 'Edit Book' : 'Add Book';
+
 	return (
 		<Modal
 			isOpen={isOpen}
@@ -20,6 +23,7 @@ const BookModal: React.FC<BookModalProps> = ({ isOpen, onRequestClose, initialVa
 			overlayClassName={styles.overlay}
 		>
 			<div className={styles.modalContent}>
+				<p className={styles.modalTitle}>{modalTitle}</p>
 				<AddEditBookForm initialValues={initialValues} handleClose={onRequestClose} />
 				<div className={styles.buttonGroup}>
 					<button onClick={onRequestClose} className={styles.cancelButton}>Cancel</button>

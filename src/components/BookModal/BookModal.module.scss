@@ -20,6 +20,14 @@
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
+.modalTitle {
+	margin-bottom: 20px;
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+}
+
+
 .modalContent {
 	display: flex;
 	flex-direction: column;
@@ -33,20 +41,25 @@
 	margin-top: 1rem;
 }
 
-.cancelButton,
-.saveButton {
-	padding: 0.5rem 1rem;
+.cancelButton {
+	background-color: #f44336;
+	color: white;
 	border: none;
+	padding: 10px 20px;
 	border-radius: 4px;
 	cursor: pointer;
 }
 
-.cancelButton {
-	background-color: #ccc;
-	color: #333;
+.cancelButton:hover,
+.saveButton:hover {
+	opacity: 0.8;
 }
 
 .saveButton {
-	background-color: var(--primary-color);
+	background-color: var(--secondary-color);
 	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 4px;
+	cursor: pointer;
 }
