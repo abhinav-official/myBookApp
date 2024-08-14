@@ -12,6 +12,13 @@ html {
   padding: 0;
   width: 100%;
   height: 100%;
+  background: url('https://cdn.dribbble.com/users/3951514/screenshots/7172485/media/4b18b0a7bcfd887e95c01e2208c594f6.gif') no-repeat center center fixed;
+  background-size: cover;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
 }
 
 a {

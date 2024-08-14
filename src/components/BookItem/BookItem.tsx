@@ -52,7 +52,7 @@ const BookItem: React.FC<BookItemProps> = ({ book }) => {
 				{book.isLocal && (
 					<>
 						<button onClick={handleEdit}><FaEdit color={'white'} /></button>
-						<button onClick={handleDelete}><FaTrash color={'black'} /></button>
+						<button onClick={handleDelete}><FaTrash color={'white'} /></button>
 					</>
 				)}
 			</div>
