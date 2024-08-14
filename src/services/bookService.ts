@@ -1,19 +1,20 @@
-import { Book } from '../types';
+import axios from 'axios';
+import { Book } from '~/types';
 
 const API_URL = 'https://my-json-server.typicode.com/cutamar/mock/books';
+const cache: { [key: string]: Book[] } = {};
 
 export const fetchBooks = async (): Promise<Book[]> => {
-  const response = await fetch(API_URL);
-  if (!response.ok) {
-	throw new Error('Failed to fetch books');
+  if (cache[API_URL]) {
+    return cache[API_URL];
   }
-  return response.json();
-};
 
-export const fetchBookById = async (id: number): Promise<Book> => {
-  const response = await fetch(`${API_URL}/${id}`);
-  if (!response.ok) {
-	throw new Error('Failed to fetch book');
+  try {
+    const response = await axios.get<Book[]>(API_URL);
+    cache[API_URL] = response.data;
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch books:', error);
+    throw error;
   }
-  return response.json();
 };

@@ -22,7 +22,7 @@ const AddEditBookForm: React.FC<AddEditBookFormProps> = ({ initialValues, handle
 			dispatch(editBook(data));
 			onEditSubmit?.(data);
 		} else {
-			dispatch(addBook(data));
+			dispatch(addBook({ ...data, isLocal: true, id: Date.now() }));
 		}
 		handleClose();
 		reset();
