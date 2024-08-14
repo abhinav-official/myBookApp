@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Book } from '../types';
+import { Book } from '~/types';
 import { useSnackbar } from 'notistack';
 
 export const useBooks = () => {

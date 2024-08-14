@@ -23,13 +23,7 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "*": [
-        "src/*"
-      ],
-      "*.module.css": [
-        "src/*"
-      ],
-      "*.module.scss": [
+      "~/*": [
         "src/*"
       ]
     }

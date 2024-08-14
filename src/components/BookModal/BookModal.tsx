@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
-import { Book } from '../../types';
+import { Book } from '~/types';
 import AddEditBookForm from '../AddEditBookForm/AddEditBookForm';
 import styles from './BookModal.module.scss';
 

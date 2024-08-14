@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Book } from '../../types';
+import { Book } from '~/types';
 import BookModal from '../BookModal/BookModal';
-import { useBooks } from '../../hooks/useBooks';
-import { useFavorites } from '../../hooks/useFavourites';
+import { useBooks } from '~/hooks/useBooks';
+import { useFavorites } from '~/hooks/useFavourites';
 import Image from '../Image/Image';
 import styles from './BookItem.module.scss';
 import { FaEdit, FaHeart, FaTrash } from 'react-icons/fa';
-import { FaDeleteLeft } from 'react-icons/fa6';
 
 type BookItemProps = {
 	book: Book;

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import BookItem from '../BookItem/BookItem';
-import Pagination from '../Pagination/Pagination';
-import { Book } from '../../types';
+import Pagination from '~/components/Pagination/Pagination';
+import { Book } from '~/types';
 import styles from './BookList.module.scss';
-import BookModal from '../BookModal/BookModal';
-import { useBooks } from '../../hooks/useBooks';
+import BookModal from '~/components/BookModal/BookModal';
+import { useBooks } from '~/hooks/useBooks';
+import BookItem from '../BookItem/BookItem';
 
 
 const BookList: React.FC = () => {

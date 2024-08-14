@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { Book } from '../../types';
+import { Book } from '~/types';
 import styles from './AddEditBookForm.module.scss';
 
 interface AddEditBookFormProps {
