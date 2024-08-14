@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import styles from './Pagination.module.scss';
 
 interface PaginationProps {
@@ -9,16 +9,19 @@ interface PaginationProps {
 }
 
 const Pagination: React.FC<PaginationProps> = ({ booksPerPage, totalBooks, paginate, currentPage }) => {
-	const pageNumbers = [];
+	const pageNumbers = useMemo(() => {
+		const pages = [];
+		for (let i = 1; i <= Math.ceil(totalBooks / booksPerPage); i++) {
+			pages.push(i);
+		}
+		return pages;
+	}, [booksPerPage, totalBooks]);
 
-	for (let i = 1; i <= Math.ceil(totalBooks / booksPerPage); i++) {
-		pageNumbers.push(i);
-	}
 
-	const handlePageChange = (pageNumber: number) => {
+	const handlePageChange = useCallback((pageNumber: number) => {
 		paginate(pageNumber);
 		window.scrollTo(0, 0);
-	};
+	}, [paginate]);
 
 	return (
 		<nav className={styles.pagination}>
