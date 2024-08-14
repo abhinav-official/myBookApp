@@ -4,6 +4,7 @@ import './BookItem.module.scss';
 import BookModal from '../BookModal/BookModal';
 import { useBooks } from '../../hooks/useBooks';
 import { useFavorites } from '../../hooks/useFavourites';
+import Image from '../Image/Image';
 
 type BookItemProps = {
 	book: Book;
@@ -23,7 +24,7 @@ const BookItem: React.FC<BookItemProps> = ({ book }) => {
 
 	return (
 		<div className="bookItem">
-			<img src={book.cover} alt={`${book.title} cover`} className="bookCover" />
+			<Image src={book.cover} fallbackSrc="https://via.placeholder.com/150" alt={`${book.title} cover`} className="bookCover" />
 			<h2 className="bookTitle">{book.title}</h2>
 			<p className="bookAuthor">{book.author}</p>
 			<p className="bookDescription">{book.description}</p>

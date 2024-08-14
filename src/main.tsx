@@ -6,7 +6,7 @@ import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <SnackbarProvider maxSnack={3}>
+    <SnackbarProvider maxSnack={3} autoHideDuration={1200}>
       <App />
     </SnackbarProvider>
   </React.StrictMode>,
