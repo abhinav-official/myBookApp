@@ -5,6 +5,8 @@ import { useBooks } from '../../hooks/useBooks';
 import { useFavorites } from '../../hooks/useFavourites';
 import Image from '../Image/Image';
 import styles from './BookItem.module.scss';
+import { FaEdit, FaHeart, FaTrash } from 'react-icons/fa';
+import { FaDeleteLeft } from 'react-icons/fa6';
 
 type BookItemProps = {
 	book: Book;
@@ -23,20 +25,24 @@ const BookItem: React.FC<BookItemProps> = ({ book }) => {
 	const isFavorite = favorites.includes(book.id);
 
 	return (
-		<div className={styles.bookItem}>
+		<div className={styles.bookItemContainer}>
 			<Image src={book.cover} fallbackSrc="https://via.placeholder.com/150" alt={`${book.title} cover`} className={styles.bookCover} />
-			<h2 className={styles.bookTitle}>{book.title}</h2>
-			<p className={styles.bookAuthor}>{book.author}</p>
-			<p className={styles.bookDescription}>{book.description}</p>
-			<button onClick={() => toggleFavorite(book.id)}>
-				{isFavorite ? 'Unfavorite' : 'Favorite'}
-			</button>
-			{book.isLocal && (
-				<>
-					<button onClick={() => setIsEditing(true)}>Edit</button>
-					<button onClick={() => deleteBook(book.id)}>Delete</button>
-				</>
-			)}
+			<div className={styles.bookItemInfoContainer}>
+				<h2 className={styles.bookTitle}>{book.title}</h2>
+				<p className={styles.bookAuthor}>{book.author}</p>
+				<p className={styles.bookDescription}>{book.description}</p>
+			</div>
+			<div className={styles.bookItemActionContainer}>
+				<button onClick={() => toggleFavorite(book.id)} >
+					<FaHeart color={isFavorite ? 'red' : 'white'} />
+				</button>
+				{book.isLocal && (
+					<>
+						<button onClick={() => setIsEditing(true)}><FaEdit color={'white'} /></button>
+						<button onClick={() => deleteBook(book.id)}><FaTrash color={'black'} /></button>
+					</>
+				)}
+			</div>
 			<BookModal
 				isOpen={isEditing}
 				onRequestClose={() => setIsEditing(false)}
