@@ -4,10 +4,13 @@ import styles from './BookList.module.scss';
 import { useBooks } from '~/hooks/useBooks';
 import BookItem from '../BookItem/BookItem';
 
-
 const BookList: React.FC = () => {
 	const { books } = useBooks();
 
+	console.log(
+		"books", books.length,
+		books,
+	);
 	const [currentPage, setCurrentPage] = useState(1);
 	const booksPerPage = 5;
 

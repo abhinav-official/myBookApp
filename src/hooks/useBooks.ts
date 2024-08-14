@@ -72,7 +72,6 @@ export const useBooks = () => {
 
   return {
     books,
-    localBooks,
     addBook,
     editBook,
     deleteBook,

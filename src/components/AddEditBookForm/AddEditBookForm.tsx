@@ -6,9 +6,10 @@ import { useBooks } from '~/hooks/useBooks';
 interface AddEditBookFormProps {
 	initialValues?: Book;
 	handleClose: () => void;
+	onEditSubmit?: (book: Book) => void;
 }
 
-const AddEditBookForm: React.FC<AddEditBookFormProps> = ({ initialValues, handleClose }) => {
+const AddEditBookForm: React.FC<AddEditBookFormProps> = ({ initialValues, handleClose, onEditSubmit }) => {
 	const { addBook, editBook } = useBooks()
 	const { register, handleSubmit, reset } = useForm<Book>({
 		defaultValues: initialValues,
@@ -17,6 +18,7 @@ const AddEditBookForm: React.FC<AddEditBookFormProps> = ({ initialValues, handle
 	const handleFormSubmit = (data: Book) => {
 		if (initialValues) {
 			editBook(data);
+			onEditSubmit?.(data);
 		} else {
 			addBook(data);
 		}
