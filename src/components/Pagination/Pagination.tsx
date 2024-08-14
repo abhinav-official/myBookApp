@@ -14,12 +14,17 @@ const Pagination: React.FC<PaginationProps> = ({ booksPerPage, totalBooks, pagin
 		pageNumbers.push(i);
 	}
 
+	const handlePageChange = (pageNumber: number) => {
+		paginate(pageNumber);
+		window.scrollTo(0, 0); // Scroll to the top of the page
+	};
+
 	return (
 		<nav className={styles.pagination}>
 			<ul>
 				{pageNumbers.map(number => (
 					<li key={number}>
-						<button onClick={() => paginate(number)}>{number}</button>
+						<button onClick={() => handlePageChange(number)}>{number}</button>
 					</li>
 				))}
 			</ul>
