@@ -8,10 +8,9 @@ interface BookModalProps {
 	isOpen: boolean;
 	onRequestClose: () => void;
 	initialValues?: Book;
-	onEditSubmit?: (book: Book) => void;
 }
 
-const BookModal: React.FC<BookModalProps> = ({ isOpen, onRequestClose, initialValues, onEditSubmit }) => {
+const BookModal: React.FC<BookModalProps> = ({ isOpen, onRequestClose, initialValues }) => {
 	return (
 		<Modal
 			isOpen={isOpen}
@@ -21,7 +20,7 @@ const BookModal: React.FC<BookModalProps> = ({ isOpen, onRequestClose, initialVa
 			overlayClassName={styles.overlay}
 		>
 			<div className={styles.modalContent}>
-				<AddEditBookForm initialValues={initialValues} handleClose={onRequestClose} onEditSubmit={onEditSubmit} />
+				<AddEditBookForm initialValues={initialValues} handleClose={onRequestClose} />
 				<div className={styles.buttonGroup}>
 					<button onClick={onRequestClose} className={styles.cancelButton}>Cancel</button>
 					<button type="submit" form="bookForm" className={styles.saveButton}>Save</button>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Book } from '~/types';
 import BookModal from '../BookModal/BookModal';
 import Image from '../Image/Image';
@@ -18,42 +18,36 @@ const BookItem: React.FC<BookItemProps> = ({ book }) => {
 	const dispatch = useDispatch<AppDispatch>();
 	const favorites = useSelector((state: RootState) => state.favorites.favorites);
 	const [isEditing, setIsEditing] = useState(false);
-	const [currentBook, setCurrentBook] = useState<Book | null>(book);
-
-	if (currentBook === null) {
-		return null;
-	}
 
 	const handleEdit = () => {
 		setIsEditing(true);
 	}
 
-	const isFavorite = favorites.includes(currentBook.id);
 
 	const handleToggleFavourite = () => {
-		dispatch(toggleFavorite(currentBook.id))
+		dispatch(toggleFavorite(book.id))
 	}
 	const handleDelete = () => {
-		setCurrentBook(null);
 		dispatch(deleteBook(book.id));
 	}
 
 
-	const formattedDate = format(new Date(currentBook.publicationDate), 'dd MMM yyyy');
+	const isFavorite = useMemo(() => favorites.includes(book.id), [favorites, book.id]);
+	const formattedDate = useMemo(() => book?.publicationDate && format(new Date(book.publicationDate), 'dd MMM yyyy'), [book.publicationDate]);
 	return (
 		<div className={styles.bookItemContainer}>
-			<Image src={currentBook.cover} fallbackSrc="https://via.placeholder.com/150" alt={`${currentBook.title} cover`} className={styles.bookCover} />
+			<Image src={book.cover} fallbackSrc="https://via.placeholder.com/150" alt={`${book.title} cover`} className={styles.bookCover} />
 			<div className={styles.bookItemInfoContainer}>
-				<h2 className={styles.bookTitle}>{currentBook.title}</h2>
-				<p className={styles.bookAuthor}>{currentBook.author}</p>
-				<p className={styles.bookDescription}>{currentBook.description}</p>
+				<h2 className={styles.bookTitle}>{book.title}</h2>
+				<p className={styles.bookAuthor}>{book.author}</p>
+				<p className={styles.bookDescription}>{book.description}</p>
 				<p className={styles.bookPublicationDate}>{formattedDate}</p>
 			</div>
 			<div className={styles.bookItemActionContainer}>
 				<button onClick={handleToggleFavourite} >
 					<FaHeart color={isFavorite ? 'red' : 'white'} />
 				</button>
-				{currentBook.isLocal && (
+				{book.isLocal && (
 					<>
 						<button onClick={handleEdit}><FaEdit color={'white'} /></button>
 						<button onClick={handleDelete}><FaTrash color={'black'} /></button>
@@ -63,8 +57,7 @@ const BookItem: React.FC<BookItemProps> = ({ book }) => {
 			<BookModal
 				isOpen={isEditing}
 				onRequestClose={() => setIsEditing(false)}
-				initialValues={currentBook}
-				onEditSubmit={(data) => setCurrentBook(data)}
+				initialValues={book}
 			/>
 		</div>
 	);
