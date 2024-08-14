@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Pagination from '~/components/Pagination/Pagination';
 import styles from './BookList.module.scss';
@@ -11,7 +11,8 @@ const BookList: React.FC = () => {
 	const dispatch = useDispatch<AppDispatch>();
 	const books = useSelector((state: RootState) => state.books.books);
 	const localBooks = useSelector((state: RootState) => state.books.localBooks);
-	const combinedBooks = [...books, ...localBooks];
+
+	const combinedBooks = useMemo(() => [...books, ...localBooks], [books, localBooks]);
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const booksPerPage = 5;
@@ -31,9 +32,12 @@ const BookList: React.FC = () => {
 
 	const indexOfLastBook = currentPage * booksPerPage;
 	const indexOfFirstBook = indexOfLastBook - booksPerPage;
-	const currentBooks = combinedBooks.slice(indexOfFirstBook, indexOfLastBook);
 
-	const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+	const currentBooks = useMemo(() => combinedBooks.slice(indexOfFirstBook, indexOfLastBook), [combinedBooks, indexOfFirstBook, indexOfLastBook]);
+
+	const paginate = useCallback((pageNumber: number) => setCurrentPage(pageNumber), [setCurrentPage]);
+
 
 	return (
 		<div className={styles.bookList}>
