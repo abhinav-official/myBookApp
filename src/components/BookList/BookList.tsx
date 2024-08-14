@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import Pagination from '~/components/Pagination/Pagination';
 import styles from './BookList.module.scss';
-import { useBooks } from '~/hooks/useBooks';
 import BookItem from '../BookItem/BookItem';
+import { useSelector } from 'react-redux';
+import { RootState } from '~/store';
 
 const BookList: React.FC = () => {
-	const { books } = useBooks();
-
+	const books = useSelector((state: RootState) => state.books.books);
 	console.log(
 		"books", books.length,
 		books,

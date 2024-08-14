@@ -1,7 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { Book } from '~/types';
 import styles from './AddEditBookForm.module.scss';
-import { useBooks } from '~/hooks/useBooks';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '~/store';
+import { addBook, editBook } from '~/store/booksSlice';
 
 interface AddEditBookFormProps {
 	initialValues?: Book;
@@ -10,17 +12,17 @@ interface AddEditBookFormProps {
 }
 
 const AddEditBookForm: React.FC<AddEditBookFormProps> = ({ initialValues, handleClose, onEditSubmit }) => {
-	const { addBook, editBook } = useBooks()
+	const dispatch = useDispatch<AppDispatch>();
 	const { register, handleSubmit, reset } = useForm<Book>({
 		defaultValues: initialValues,
 	});
 
 	const handleFormSubmit = (data: Book) => {
 		if (initialValues) {
-			editBook(data);
+			dispatch(editBook(data));
 			onEditSubmit?.(data);
 		} else {
-			addBook(data);
+			dispatch(addBook(data));
 		}
 		handleClose();
 		reset();
