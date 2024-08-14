@@ -4,17 +4,12 @@ import Pagination from '../Pagination/Pagination';
 import { Book } from '../../types';
 import './BookList.module.scss';
 import BookModal from '../BookModal/BookModal';
+import { useBooks } from '../../hooks/useBooks';
 
-interface BookListProps {
-	books: Book[];
-	favorites: number[];
-	toggleFavorite: (id: number) => void;
-	editBook: (book: Book) => void;
-	deleteBook: (id: number) => void;
-	addBook: (book: Book) => void;
-}
 
-const BookList: React.FC<BookListProps> = ({ books, favorites, toggleFavorite, editBook, deleteBook, addBook }) => {
+const BookList: React.FC = () => {
+	const { books, addBook } = useBooks();
+
 	const [currentPage, setCurrentPage] = useState(1);
 	const [isAdding, setIsAdding] = useState(false);
 	const booksPerPage = 5;
@@ -37,10 +32,6 @@ const BookList: React.FC<BookListProps> = ({ books, favorites, toggleFavorite, e
 				<BookItem
 					key={book.id}
 					book={book}
-					isFavorite={favorites.includes(book.id)}
-					toggleFavorite={toggleFavorite}
-					editBook={editBook}
-					deleteBook={deleteBook}
 				/>
 			))}
 			<Pagination booksPerPage={booksPerPage} totalBooks={books.length} paginate={paginate} />

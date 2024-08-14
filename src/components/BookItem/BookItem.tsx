@@ -2,22 +2,24 @@ import React, { useState } from 'react';
 import { Book } from '../../types';
 import './BookItem.module.scss';
 import BookModal from '../BookModal/BookModal';
+import { useBooks } from '../../hooks/useBooks';
+import { useFavorites } from '../../hooks/useFavourites';
 
-interface BookItemProps {
+type BookItemProps = {
 	book: Book;
-	isFavorite: boolean;
-	toggleFavorite: (id: number) => void;
-	editBook: (book: Book) => void;
-	deleteBook: (id: number) => void;
 }
 
-const BookItem: React.FC<BookItemProps> = ({ book, isFavorite, toggleFavorite, editBook, deleteBook }) => {
+const BookItem: React.FC<BookItemProps> = ({ book }) => {
+	const { editBook, deleteBook } = useBooks();
+	const { favorites, toggleFavorite } = useFavorites();
 	const [isEditing, setIsEditing] = useState(false);
 
 	const handleEditSubmit = (editedBook: Book) => {
 		editBook(editedBook);
 		setIsEditing(false);
 	};
+
+	const isFavorite = favorites.includes(book.id);
 
 	return (
 		<div className="bookItem">
