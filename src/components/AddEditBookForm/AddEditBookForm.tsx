@@ -9,13 +9,17 @@ interface AddEditBookFormProps {
 }
 
 const AddEditBookForm: React.FC<AddEditBookFormProps> = ({ initialValues, handleClose }) => {
-	const { addBook } = useBooks()
+	const { addBook, editBook } = useBooks()
 	const { register, handleSubmit, reset } = useForm<Book>({
 		defaultValues: initialValues,
 	});
 
 	const handleFormSubmit = (data: Book) => {
-		addBook(data)
+		if (initialValues) {
+			editBook(data);
+		} else {
+			addBook(data);
+		}
 		handleClose();
 		reset();
 	};
