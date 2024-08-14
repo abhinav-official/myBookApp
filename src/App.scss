@@ -1,8 +1,29 @@
 @import './styles/variables.scss';
 
-.App {
-  text-align: center;
-  padding: 2rem;
+
+.App-header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  /* Ensure the header spans the full width */
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  width: 100%;
+}
+
+.navbar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 h1 {
