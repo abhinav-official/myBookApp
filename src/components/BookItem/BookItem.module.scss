@@ -1,11 +1,11 @@
 .bookItem {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	align-items: center;
 	padding: 1rem;
 	border: 1px solid #ccc;
 	border-radius: 8px;
-	background-color: #f9f9f9;
+	background-color: #000;
 	margin-bottom: 1rem;
 	width: 100%;
 	max-width: 400px;

@@ -16,7 +16,7 @@ const Pagination: React.FC<PaginationProps> = ({ booksPerPage, totalBooks, pagin
 
 	const handlePageChange = (pageNumber: number) => {
 		paginate(pageNumber);
-		window.scrollTo(0, 0); // Scroll to the top of the page
+		window.scrollTo(0, 0);
 	};
 
 	return (

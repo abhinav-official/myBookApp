@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Book } from '../../types';
-import './BookItem.module.scss';
 import BookModal from '../BookModal/BookModal';
 import { useBooks } from '../../hooks/useBooks';
 import { useFavorites } from '../../hooks/useFavourites';
 import Image from '../Image/Image';
+import styles from './BookItem.module.scss';
 
 type BookItemProps = {
 	book: Book;
@@ -23,11 +23,11 @@ const BookItem: React.FC<BookItemProps> = ({ book }) => {
 	const isFavorite = favorites.includes(book.id);
 
 	return (
-		<div className="bookItem">
-			<Image src={book.cover} fallbackSrc="https://via.placeholder.com/150" alt={`${book.title} cover`} className="bookCover" />
-			<h2 className="bookTitle">{book.title}</h2>
-			<p className="bookAuthor">{book.author}</p>
-			<p className="bookDescription">{book.description}</p>
+		<div className={styles.bookItem}>
+			<Image src={book.cover} fallbackSrc="https://via.placeholder.com/150" alt={`${book.title} cover`} className={styles.bookCover} />
+			<h2 className={styles.bookTitle}>{book.title}</h2>
+			<p className={styles.bookAuthor}>{book.author}</p>
+			<p className={styles.bookDescription}>{book.description}</p>
 			<button onClick={() => toggleFavorite(book.id)}>
 				{isFavorite ? 'Unfavorite' : 'Favorite'}
 			</button>

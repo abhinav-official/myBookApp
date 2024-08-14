@@ -1,13 +1,13 @@
 import React from 'react';
 import BookList from './components/BookList/BookList';
-import './App.scss';
+import styles from './App.module.scss';
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <nav className="navbar">
-          <div className="navbar-title">Book Web App</div>
+    <div className={styles.App}>
+      <header className={styles.appHeader}>
+        <nav className={styles.navbar}>
+          <div className={styles.navbarTitle}>Book Web App</div>
         </nav>
       </header>
       <main>
