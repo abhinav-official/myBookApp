@@ -1,19 +1,22 @@
 import { useForm } from 'react-hook-form';
 import { Book } from '~/types';
 import styles from './AddEditBookForm.module.scss';
+import { useBooks } from '~/hooks/useBooks';
 
 interface AddEditBookFormProps {
 	initialValues?: Book;
-	onSubmit: (book: Book) => void;
+	handleClose: () => void;
 }
 
-const AddEditBookForm: React.FC<AddEditBookFormProps> = ({ initialValues, onSubmit }) => {
+const AddEditBookForm: React.FC<AddEditBookFormProps> = ({ initialValues, handleClose }) => {
+	const { addBook } = useBooks()
 	const { register, handleSubmit, reset } = useForm<Book>({
 		defaultValues: initialValues,
 	});
 
 	const handleFormSubmit = (data: Book) => {
-		onSubmit({ ...data, id: initialValues?.id || Date.now() });
+		addBook(data)
+		handleClose();
 		reset();
 	};
 

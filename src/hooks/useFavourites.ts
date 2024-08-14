@@ -1,9 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 
 export const useFavorites = () => {
-  const [favorites, setFavorites] = useState<number[]>([]);
+  const [favorites, setFavorites] = useState<number[]>(() => {
+	const savedFavorites = localStorage.getItem('favorites');
+	return savedFavorites ? JSON.parse(savedFavorites) : [];
+  });
   const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+	localStorage.setItem('favorites', JSON.stringify(favorites));
+  }, [favorites]);
 
   const toggleFavorite = (id: number) => {
 	setFavorites(prevFavorites =>

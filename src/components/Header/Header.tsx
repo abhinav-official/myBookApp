@@ -1,24 +1,16 @@
 import React, { useState } from 'react';
 import styles from './Header.module.scss';
 import BookModal from '~/components/BookModal/BookModal';
-import { Book } from '~/types';
-import { useBooks } from '~/hooks/useBooks';
 
 
 const Header: React.FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const { addBook } = useBooks()
 
 	const handleAddBookClick = () => {
 		setIsModalOpen(true);
 	};
 
 	const handleModalClose = () => {
-		setIsModalOpen(false);
-	};
-
-	const handleModalSubmit = (newBook: Book) => {
-		addBook(newBook);
 		setIsModalOpen(false);
 	};
 
@@ -31,7 +23,6 @@ const Header: React.FC = () => {
 			<BookModal
 				isOpen={isModalOpen}
 				onRequestClose={handleModalClose}
-				onSubmit={handleModalSubmit}
 			/>
 		</header>
 	);
